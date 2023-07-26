@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- * builtin_exit - Program's exit with status.
+ * builtin_exit - Exit of the program with the status.
  *
- * @data: Program's Data STRUCTURE.
+ * @data: Structure for the programs data.
  *
- * Return: If sucess RETURN 0, RETURN other number if declared in ArgS.
+ * Return: Zero if sucess, or other number if its declared in the arguments.
  */
 int builtin_exit(data_of_program *data)
 {
@@ -27,11 +27,11 @@ int builtin_exit(data_of_program *data)
 }
 
 /**
- * builtin_cd - cd into current dir.
+ * builtin_cd - Change of the current directory.
  *
- * @data: Program's Data STRUCT.
+ * @data: Structurefor the programs data.
  *
- * Return: If sucess RETURN 0, RETURN other number if declared in ArgS.
+ * Return: Zero if sucess, or other number if its declared in the arguments.
  */
 int builtin_cd(data_of_program *data)
 {
@@ -67,13 +67,13 @@ int builtin_cd(data_of_program *data)
 }
 
 /**
- * set_work_directory - Set to working dir.
+ * set_work_directory - Set the working directory.
  *
- * @data: Program's Data STRUCTURE.
+ * @data: Structure for the programs data.
  *
- * @new_dir: Set PATH as a new working dir.
+ * @new_dir: Path to be set as work directory.
  *
- * Return: If sucess RETURN 0, RETURN other number if declared in ArgS.
+ * Return: Zero if sucess, or other number if its declared in the arguments.
  */
 int set_work_directory(data_of_program *data, char *new_dir)
 {
@@ -97,9 +97,9 @@ int set_work_directory(data_of_program *data, char *new_dir)
 }
 
 /**
- * builtin_help - Display where shell runs in the environment.
- * @data: Program's data structure.
- * Return:  If sucess RETURN 0, RETURN other number if declared in ArgS.
+ * builtin_help - shows the environment where the shell runs
+ * @data: struct for the program's data
+ * Return: zero if sucess, or other number if its declared in the arguments
  */
 int builtin_help(data_of_program *data)
 {
@@ -108,7 +108,7 @@ int builtin_help(data_of_program *data)
 
 	mensajes[0] = HELP_MSG;
 
-	/* VALIDATE ARGUMENTS */
+	/* validate args */
 	if (data->tokens[1] == NULL)
 	{
 		_print(mensajes[0] + 6);
@@ -135,27 +135,29 @@ int builtin_help(data_of_program *data)
 			return (1);
 		}
 	}
+	
 	errno = EINVAL;
 	perror(data->command_name);
 	return (0);
 }
 
 /**
- * builtin_alias - ADD REM or show ALIAS'.
+ * builtin_alias - Add, remove or show aliases.
  *
- * @data: Program's Data STRUCT.
+ * @data: Structure for programs data.
  *
- * Return: If sucess RETURN 0, RETURN other number if declared in ArgS.
+ * Return: Zero if sucess, or other number if its declared in the arguments.
  */
 int builtin_alias(data_of_program *data)
 {
 	int i = 0;
 
-
+	
 	if (data->tokens[1] == NULL)
 		return (print_alias(data, NULL));
 
 	while (data->tokens[++i])
+	{
 		if (count_characters(data->tokens[i], "="))
 			set_alias(data->tokens[i], data);
 		else
